@@ -1,28 +1,25 @@
 const initialState = {
-  createChannelOpen: "false"
+  channelMenuOpen: false
 }
 
 //Action types
-const CREATE_CHANNEL_OPEN = "CREATE_CHANNEL_OPEN"
+const HANDLE_MENU = "HANDLE_MENU"
 //Action Creators
-export function createChannelOpen() {
-  console.log("hitting mah reduxxx ducks")
-  this.setState({
-    createChannelOpen: "true"
-  })
+
+export function toggleChannelMenu(bool) {
+  console.log("hitting me up[")
   return {
-    type: CREATE_CHANNEL_OPEN,
-    payload: createChannelOpen
+    type: HANDLE_MENU,
+    payload: !bool
   }
 }
 
 //Object.assign cases
 
 export default function reducer(state = initialState, action) {
-  // console.log('this',action);
   switch (action.type) {
-    case CREATE_CHANNEL_OPEN + "_FULFILLED":
-      return { ...state, createChannelOpen: action.payload }
+    case HANDLE_MENU:
+      return { ...state, channelMenuOpen: action.payload }
 
     default:
       return state

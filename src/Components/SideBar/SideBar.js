@@ -2,46 +2,34 @@ import React, { Component } from "react"
 import styled from "styled-components"
 import DiscordIcon from "./DiscordIcon"
 import { connect } from "react-redux"
-import CreateChannel from "./CreateChannel"
+import CreateChannel from "../Createchannel/CreateChannel"
 // import { Link } from "react-router-dom"
-// import { createChannelOpen } from "../ducks/reducer"
+import { toggleChannelMenu } from "../../ducks/reducer"
 
 class SideBar extends Component {
-  constructor() {
-    super()
-    this.state = {
-      openChannelMenu: false
-    }
-  }
-
-  handleMenu() {
-    if (!this.state.openChannelMenu) this.setState({ openChannelMenu: true })
-    else if (this.state.openChannelMenu) {
-      this.setState({ openChannelMenu: false })
-    }
-  }
-
-  handleClose() {
-    this.setState({ openChannelMenu: false })
-  }
-
-  handleClose
-
   render() {
     return (
       <SideBarContainer>
-        <HomePageIcon onClick={_ => this.handleClose()}>
+        <HomePageIcon
+          onClick={_ =>
+            this.props.toggleChannelMenu(this.props.channelMenuOpen)
+          }
+        >
           <DiscordIcon />
         </HomePageIcon>
         <Online>1 Online</Online>
         <Line />
-        <CreateChannelButton onClick={_ => this.handleMenu()}>
+        <CreateChannelButton
+          onClick={_ =>
+            this.props.toggleChannelMenu(this.props.channelMenuOpen)
+          }
+        >
           <Plus>+</Plus>
         </CreateChannelButton>
         <Line style={{ marginTop: "1rem" }} />
         <div
           className="menu"
-          style={this.state.openChannelMenu === true ? test : test1}
+          style={this.props.channelMenuOpen === true ? test : test1}
         >
           <CreateChannel />
         </div>
@@ -49,8 +37,17 @@ class SideBar extends Component {
     )
   }
 }
+// makes methods available that you choose.
+function mapStateToProps(state) {
+  return {
+    channelMenuOpen: state.channelMenuOpen
+  }
+}
 
-export default SideBar
+export default connect(
+  mapStateToProps,
+  { toggleChannelMenu }
+)(SideBar)
 
 let test1 = {
   display: "none"

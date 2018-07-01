@@ -8,7 +8,9 @@ export default class componentName extends Component {
 }
 
 const Container = styled.section`
-  height: 20rem;
-  width: 20rem;
-  background: salmon;
+  height: 100%;
+  width: 100%;
+  background: black;
+  opacity: 0.7;
+  background-repeat: no-repeat;
 `
