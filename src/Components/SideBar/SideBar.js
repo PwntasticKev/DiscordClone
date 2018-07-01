@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import styled from "styled-components"
 import DiscordIcon from "./DiscordIcon"
 import { connect } from "react-redux"
-import CreateChannel from "../Createchannel/CreateChannel"
+// import CreateChannel from "../Createchannel/CreateChannel"
 // import { Link } from "react-router-dom"
 import { toggleChannelMenu } from "../../ducks/reducer"
 
@@ -10,11 +10,7 @@ class SideBar extends Component {
   render() {
     return (
       <SideBarContainer>
-        <HomePageIcon
-          onClick={_ =>
-            this.props.toggleChannelMenu(this.props.channelMenuOpen)
-          }
-        >
+        <HomePageIcon>
           <DiscordIcon />
         </HomePageIcon>
         <Online>1 Online</Online>
@@ -47,7 +43,7 @@ export default connect(
 const SideBarContainer = styled.section`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 96.9vh;
   width: 40px;
   padding: 0.7rem 1rem;
   align-items: center;
@@ -89,17 +85,19 @@ const CreateChannelButton = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2.25px dotted #535559;
+  border: 1px dashed #535559;
   outline: none;
   background: #1e2124;
   color: #535559;
   position: relative;
+  transition: border-color 0.25s ease, color 0.25s ease;
+  font-weight: 300;
 `
 
 const Plus = styled.div`
   font-size: 2.5rem;
   font-weight: 200;
   position: absolute;
-  bottom: 3px;
-  left: 11px;
+  bottom: 4px;
+  left: 13px;
 `
