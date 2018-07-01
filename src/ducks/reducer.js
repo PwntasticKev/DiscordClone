@@ -4,10 +4,10 @@ const initialState = {
 
 //Action types
 const HANDLE_MENU = "HANDLE_MENU"
+
 //Action Creators
 
 export function toggleChannelMenu(bool) {
-  console.log("hitting me up[")
   return {
     type: HANDLE_MENU,
     payload: !bool

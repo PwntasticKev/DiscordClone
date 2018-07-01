@@ -13,4 +13,6 @@ const Container = styled.section`
   background: black;
   opacity: 0.7;
   background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
 `

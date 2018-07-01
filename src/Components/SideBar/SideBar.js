@@ -27,17 +27,12 @@ class SideBar extends Component {
           <Plus>+</Plus>
         </CreateChannelButton>
         <Line style={{ marginTop: "1rem" }} />
-        <div
-          className="menu"
-          style={this.props.channelMenuOpen === true ? test : test1}
-        >
-          <CreateChannel />
-        </div>
       </SideBarContainer>
     )
   }
 }
-// makes methods available that you choose.
+
+// this is sending over state or specific parts of redux state
 function mapStateToProps(state) {
   return {
     channelMenuOpen: state.channelMenuOpen
@@ -48,14 +43,6 @@ export default connect(
   mapStateToProps,
   { toggleChannelMenu }
 )(SideBar)
-
-let test1 = {
-  display: "none"
-}
-
-let test = {
-  display: "block"
-}
 
 const SideBarContainer = styled.section`
   display: flex;
