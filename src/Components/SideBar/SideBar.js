@@ -9,21 +9,23 @@ import { toggleChannelMenu } from "../../ducks/reducer"
 class SideBar extends Component {
   render() {
     return (
-      <SideBarContainer>
-        <HomePageIcon>
-          <DiscordIcon />
-        </HomePageIcon>
-        <Online>1 Online</Online>
-        <Line />
-        <CreateChannelButton
-          onClick={_ =>
-            this.props.toggleChannelMenu(this.props.channelMenuOpen)
-          }
-        >
-          <Plus>+</Plus>
-        </CreateChannelButton>
-        <Line style={{ marginTop: "1rem" }} />
-      </SideBarContainer>
+      <div style={{ display: "inlineBlock" }}>
+        <SideBarContainer>
+          <HomePageIcon>
+            <DiscordIcon />
+          </HomePageIcon>
+          <Online>1 Online</Online>
+          <Line />
+          <CreateChannelButton
+            onClick={_ =>
+              this.props.toggleChannelMenu(this.props.channelMenuOpen)
+            }
+          >
+            <Plus>+</Plus>
+          </CreateChannelButton>
+          <Line style={{ marginTop: "1rem" }} />
+        </SideBarContainer>
+      </div>
     )
   }
 }
@@ -86,12 +88,16 @@ const CreateChannelButton = styled.button`
   height: 50px;
   border-radius: 50%;
   border: 1px dashed #535559;
-  outline: none;
   background: #1e2124;
   color: #535559;
   position: relative;
   transition: border-color 0.25s ease, color 0.25s ease;
   font-weight: 300;
+  outline: 0;
+  &:hover {
+    border-color: hsla(0, 0%, 100%, 0.75);
+    color: hsla(0, 0%, 100%, 0.75);
+  }
 `
 
 const Plus = styled.div`

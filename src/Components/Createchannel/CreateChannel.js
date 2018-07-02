@@ -21,7 +21,7 @@ class CreateChannel extends Component {
               <PeopleIcon />
               <PurpleButton>Create a Server</PurpleButton>
             </LeftBox>
-            <Ore>Or</Ore>
+            <Ore>or</Ore>
             <RightBox>
               <OptionTitle style={{ color: "#3ca374" }}>Join</OptionTitle>
               <PeaTag>
@@ -78,6 +78,8 @@ const Test = styled.div`
   background-position: 0 100%, 100% 100%;
   background-repeat: no-repeat;
   background-size: 155px auto, 75px auto;
+  transition: transform 4s ease-in-out;
+  transform: translateZ(0px);
 `
 let test1 = {
   display: "none"
@@ -185,7 +187,7 @@ const Ore = styled.div`
   font-weight: 500;
   height: 100%;
   left: 0;
-  line-height: 386px;
+  line-height: 380px;
   padding-top: 48px;
   pointer-events: none;
   position: absolute;
