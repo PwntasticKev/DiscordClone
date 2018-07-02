@@ -12,12 +12,7 @@ const uc = require("./uc")
 const {
   SERVER_PORT,
   SESSION_SECRET,
-  DOMAIN,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  CALLBACK_URL,
   CONNECTION_STRING,
-  REACT_APP_LOGIN,
   REACT_APP_SUCCESS_REDIRECT
 } = process.env
 
@@ -52,6 +47,8 @@ app.use(passport.session())
 
 // using local strategy for custom login handling
 passport.use(
+  //items in here are strcitly for passport
+  // has to come in as req first
   new LocalStrategy({ passReqToCallback: true }, function(
     req,
     username,
@@ -64,36 +61,32 @@ passport.use(
       " and password: ",
       password
     )
-    db.query(
-      `SELECT * FROM users WHERE username = ?`,
-      [username],
-      (err, user) => {
-        if (err) {
-          throw err
-        } else {
-          console.log(req.body)
-          if (!user[0] && req.body.email) {
-            uc.createUser(req.body, username, password, done)
-          } else if (!user[0]) {
-            console.log("INSIDE OF THE NO EMAIL FAIL")
-            return done(null, false)
+    const db = app.get("db")
+    db.find_user([username]).then(user => {
+      console.log("hits find_user")
+
+      //else
+      console.log(req.body)
+      if (!user[0] && req.body.email) {
+        uc.createUser(req, username, password, done)
+      } else if (!user[0]) {
+        console.log("INSIDE OF THE NO EMAIL FAIL")
+        return done(null, false)
+      } else {
+        bcrypt.compare(password, user[0].password).then(valid => {
+          console.log("INSIDE OF THE COMPARE")
+          if (valid) {
+            return done(null, user[0])
           } else {
-            bcrypt.compare(password, user[0].password).then(valid => {
-              console.log("INSIDE OF THE COMPARE")
-              if (valid) {
-                return done(null, user[0])
-              } else {
-                return done(null, false)
-              }
-            })
+            return done(null, false)
           }
-        }
+        })
       }
-    )
+    })
   })
 )
 
-// Adds user obj from DB to req.session.user
+// Adds user obj from DB to req.session.user.  when user is created it comes here.
 passport.serializeUser((user, done) => {
   console.log("SERIALIZING")
   done(null, user)
@@ -101,43 +94,41 @@ passport.serializeUser((user, done) => {
 // Adds created userObj w/trails wishlist to req.user, including DB user object properties
 passport.deserializeUser((user, done) => {
   console.log("deSERIALIZING")
-  db.query(
-    "SELECT * FROM trails WHERE trail_id IN (SELECT trail_id FROM wishlist WHERE user_id = ?)",
-    [user.user_id],
-    (err, trails) => {
-      let userObj = {
-        ...user,
-        wishlist: trails
-      }
-      delete userObj.password
-      done(null, userObj)
+  const db = app.get("db")
+  db.find_session_user([user.id]).then(userdb => {
+    let userObj = {
+      ...user,
+      user: id
     }
-  )
+    delete userObj.password
+    return done(null, userdb[0])
+  })
 })
 
 // custom top level middleware to see what is arriving on the req.body
 // logging url helps debug which route has the underlying issue
+
 // also checking the session object to see what is available
-app.use((req, res, next) => {
-  console.log(
-    "URL: ",
-    req.url,
-    "Method: ",
-    req.method,
-    "Body: ",
-    req.body,
-    "Session Obj: ",
-    req.session,
-    "SessionPassport User: ",
-    req.session.passport.user
-  )
-  next()
-})
+// app.use((req, res, next) => {
+//   console.log(
+//     "URL: ",
+//     req.url,
+//     "Method: ",
+//     req.method,
+//     "Body: ",
+//     req.body,
+//     "Session Obj: ",
+//     req.session,
+//     "SessionPassport User: ",
+//     req.session.passport.user
+//   )
+//   next()
+// })
 
 app.post(
   "/login",
   passport.authenticate("local", {
-    // successRedirect: '/dashboard',
+    successRedirect: "/channels",
     failureRedirect:
       "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
   }),
@@ -146,10 +137,13 @@ app.post(
     res.sendStatus(200)
   }
 )
+// props.history.push('/dashboard') takes you to the route that you want. (on the front end)
+//options objects
+
 app.post(
   "/signup",
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
+    successRedirect: "/channels",
     failureRedirect:
       "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
   })
