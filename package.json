@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
@@ -12,6 +13,7 @@
     "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
+    "passport-local": "^1.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
@@ -31,5 +33,7 @@
   },
   "devDependencies": {
     "remote-redux-devtools": "^0.5.12"
-  }
+  },
+  "main": "server/server.js",
+  "proxy": "http://localhost:3005"
 }
