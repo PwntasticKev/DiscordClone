@@ -1,12 +1,10 @@
 import React, { Component } from "react"
-import SideBar from "./Components/SideBar"
+import routes from "./routes"
 
-export default class App extends Component {
+class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <SideBar />
-      </div>
-    )
+    return <div>{routes}</div>
   }
 }
+
+export default App

@@ -2,68 +2,50 @@ import React, { Component } from "react"
 import styled from "styled-components"
 import DiscordIcon from "./DiscordIcon"
 import { connect } from "react-redux"
-import CreateChannel from "./CreateChannel"
+// import CreateChannel from "../Createchannel/CreateChannel"
 // import { Link } from "react-router-dom"
-// import { createChannelOpen } from "../ducks/reducer"
+import { toggleChannelMenu } from "../../ducks/reducer"
 
 class SideBar extends Component {
-  constructor() {
-    super()
-    this.state = {
-      openChannelMenu: false
-    }
-  }
-
-  handleMenu() {
-    if (!this.state.openChannelMenu) this.setState({ openChannelMenu: true })
-    else if (this.state.openChannelMenu) {
-      this.setState({ openChannelMenu: false })
-    }
-  }
-
-  handleClose() {
-    this.setState({ openChannelMenu: false })
-  }
-
-  handleClose
-
   render() {
     return (
-      <SideBarContainer>
-        <HomePageIcon onClick={_ => this.handleClose()}>
-          <DiscordIcon />
-        </HomePageIcon>
-        <Online>1 Online</Online>
-        <Line />
-        <CreateChannelButton onClick={_ => this.handleMenu()}>
-          <Plus>+</Plus>
-        </CreateChannelButton>
-        <Line style={{ marginTop: "1rem" }} />
-        <div
-          className="menu"
-          style={this.state.openChannelMenu === true ? test : test1}
-        >
-          <CreateChannel />
-        </div>
-      </SideBarContainer>
+      <div style={{ display: "inlineBlock" }}>
+        <SideBarContainer>
+          <HomePageIcon>
+            <DiscordIcon />
+          </HomePageIcon>
+          <Online>1 Online</Online>
+          <Line />
+          <CreateChannelButton
+            onClick={_ =>
+              this.props.toggleChannelMenu(this.props.channelMenuOpen)
+            }
+          >
+            <Plus>+</Plus>
+          </CreateChannelButton>
+          <Line style={{ marginTop: "1rem" }} />
+        </SideBarContainer>
+      </div>
     )
   }
 }
 
-export default SideBar
-
-let test1 = {
-  display: "none"
+// this is sending over state or specific parts of redux state
+function mapStateToProps(state) {
+  return {
+    channelMenuOpen: state.channelMenuOpen
+  }
 }
 
-let test = {
-  display: "block"
-}
+export default connect(
+  mapStateToProps,
+  { toggleChannelMenu }
+)(SideBar)
 
 const SideBarContainer = styled.section`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 96.9vh;
   width: 40px;
   padding: 0.7rem 1rem;
   align-items: center;
@@ -105,17 +87,23 @@ const CreateChannelButton = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2.25px dotted #535559;
-  outline: none;
+  border: 1px dashed #535559;
   background: #1e2124;
   color: #535559;
   position: relative;
+  transition: border-color 0.25s ease, color 0.25s ease;
+  font-weight: 300;
+  outline: 0;
+  &:hover {
+    border-color: hsla(0, 0%, 100%, 0.75);
+    color: hsla(0, 0%, 100%, 0.75);
+  }
 `
 
 const Plus = styled.div`
   font-size: 2.5rem;
   font-weight: 200;
   position: absolute;
-  bottom: 3px;
-  left: 11px;
+  bottom: 4px;
+  left: 13px;
 `
