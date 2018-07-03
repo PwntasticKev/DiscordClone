@@ -21,7 +21,7 @@ export default class LogInPage extends Component {
     axios.post("/signup", { ...this.state }).then(res => {
       if (res.data.redirect === "/") {
         window.location = "/index"
-      } else if (res.data.redirect == "/login") {
+      } else if (res.data.redirect === "/login") {
         window.location = "/channels"
       }
     })

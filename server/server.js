@@ -129,7 +129,7 @@ app.post("/login", passport.authenticate("local"), (req, res, next) => {
     console.log("Logging in")
     res.redirect("/channels")
   } else {
-    console.log("Passwrod Incorrect")
+    console.log("Password Incorrect")
     return res.redirect("/")
   }
 })
@@ -140,8 +140,7 @@ app.post(
   "/signup",
   passport.authenticate("local", {
     successredirect: "/channels",
-    failureRedirect:
-      "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
+    failureRedirect: "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
   })
 )
 app.get("/logout", (req, res) => {

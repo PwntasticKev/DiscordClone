@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "whitney";
+  font-weight: 500;
+  src: url("./fonts/3bdef1251a424500c1b3a78dea9b7e57.woff"), format("woff");
+}
+
+@font-face {
+  font-family: "whitney";
+  font-weight: 600;
+  src: url("./fonts/e8acd7d9bf6207f99350ca9f9e23b168.woff"), format("woff");
+}
+@font-face {
+  font-family: "whitney";
+  font-weight: 700;
+  src: url("./fonts/3bdef1251a424500c1b3a78dea9b7e57.woff"), format("woff");
+}

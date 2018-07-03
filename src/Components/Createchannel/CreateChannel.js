@@ -58,6 +58,7 @@ const Container = styled.section`
   width: 100%;
   position: absolute;
   top: 0;
+  left: 0;
   z-index: 5;
   opacity: 0.85;
   background-color: rgb(0, 0, 0);
