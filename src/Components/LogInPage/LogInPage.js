@@ -19,14 +19,23 @@ export default class LogInPage extends Component {
   }
   SignUp() {
     axios.post("/signup", { ...this.state }).then(res => {
-      return res.data
+      if (res.data.redirect === "/") {
+        window.location = "/index"
+      } else if (res.data.redirect == "/login") {
+        window.location = "/channels"
+      }
     })
   }
   // could be res.status
 
-  // LogMeIn() {
-  //   axios.post("/signup").then()
-  // }
+  LogMeIn() {
+    axios
+      .post("/login", { ...this.state })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(console.log)
+  }
   //send the object over whatever is enters
   //login / signup
 

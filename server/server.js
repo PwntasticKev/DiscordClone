@@ -95,14 +95,13 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   console.log("deSERIALIZING")
   const db = app.get("db")
-  db.find_session_user([user.id]).then(userdb => {
-    let userObj = {
-      ...user,
-      user: id
-    }
-    delete userObj.password
-    return done(null, userdb[0])
-  })
+  // db.find_session_user([user.id]).then(userdb => {
+  let userObj = {
+    ...user
+  }
+  delete userObj.password
+  return done(null, userObj)
+  // })
 })
 
 // custom top level middleware to see what is arriving on the req.body
@@ -125,25 +124,22 @@ passport.deserializeUser((user, done) => {
 //   next()
 // })
 
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/channels",
-    failureRedirect:
-      "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
-  }),
-  (req, res) => {
-    console.log("Prepare for Success Redirect from Authenticate")
-    res.sendStatus(200)
+app.post("/login", passport.authenticate("local"), (req, res, next) => {
+  if (req.user) {
+    console.log("Logging in")
+    res.redirect("/channels")
+  } else {
+    console.log("Passwrod Incorrect")
+    return res.redirect("/")
   }
-)
+})
 // props.history.push('/dashboard') takes you to the route that you want. (on the front end)
 //options objects
 
 app.post(
   "/signup",
   passport.authenticate("local", {
-    successRedirect: "/channels",
+    successredirect: "/channels",
     failureRedirect:
       "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
   })
