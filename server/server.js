@@ -1,4 +1,5 @@
 require("dotenv").config()
+const cors = require("cors")
 const express = require("express")
 const session = require("express-session")
 const passport = require("passport")
@@ -9,6 +10,8 @@ const bcrypt = require("bcrypt")
 const LocalStrategy = require("passport-local")
 const uc = require("./uc")
 const ec = require("./ec")
+const pg = require("pg")
+const pgSession = require("connect-pg-simple")(session)
 
 const {
   SERVER_PORT,
@@ -20,23 +23,21 @@ const {
 const app = express()
 app.use(bodyParser.json())
 app.use("/static", express.static("public", { redirect: true }))
-
+app.use(cors())
 massive(CONNECTION_STRING).then(db => app.set("db", db))
-app.use(
-  session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-  })
-)
+
 // setting up session
 app.use(
   session({
+    store: new pgSession({
+      conString: CONNECTION_STRING, // Connection pool
+      tableName: "getSessions" // Use another table-name than the default "session" one
+    }),
     secret: SESSION_SECRET || "ghvjhvjahbsdfuhalksdfbkhagd",
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 30 * 24 * 60 * 60 * 1000
     }
   })
 )

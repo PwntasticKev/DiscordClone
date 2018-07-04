@@ -30,7 +30,7 @@ export default class Friends extends Component {
             <FriendName>friend</FriendName>
           </FriendContainer>
           <FriendContainer>
-            <UserIcon>ICON</UserIcon>
+            <UserIcon>ICONs</UserIcon>
             <FriendName>friend</FriendName>
           </FriendContainer>
         </MessagesContainer>
