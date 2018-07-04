@@ -29,7 +29,7 @@ export default class UserPanel extends Component {
         </OnlineContainer>
         <div>
           <div>{this.state.username}</div>
-          <div>#8038</div>
+          <Hash>#8038</Hash>
         </div>
         <Mic />
         <Headphones />
@@ -72,4 +72,8 @@ const Online = styled.div`
 `
 const OnlineContainer = styled.section`
   position: relative;
+`
+const Hash = styled.div`
+  font-size: 10px;
+  opacity: 0.3;
 `

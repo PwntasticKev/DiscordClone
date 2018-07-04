@@ -31,7 +31,8 @@ app.use(
   session({
     store: new pgSession({
       conString: CONNECTION_STRING, // Connection pool
-      tableName: "getSessions" // Use another table-name than the default "session" one
+      tableName: "getSessions",
+      ttl: 30 * 24 * 60 * 60 * 1000
     }),
     secret: SESSION_SECRET || "ghvjhvjahbsdfuhalksdfbkhagd",
     resave: false,
