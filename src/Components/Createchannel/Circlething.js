@@ -8,7 +8,6 @@ export default function circleThing() {
         <g>
           <circle
             id="circle-1"
-            class="st0"
             style={{ fill: "#FFFFFF" }}
             cx="32"
             cy="8"
@@ -18,7 +17,6 @@ export default function circleThing() {
         <g>
           <g id="circle-1_1_">
             <path
-              class="st1"
               style={{ fill: "#DADDDF" }}
               d="M32-11c10.5,0,19,8.5,19,19s-8.5,19-19,19S13,18.5,13,8S21.5-11,32-11 M32-12C21-12,12-3,12,8s9,20,20,20
 				s20-9,20-20S43-12,32-12L32-12z"
@@ -28,7 +26,6 @@ export default function circleThing() {
         <rect
           x="26"
           y="-12"
-          class="st0"
           style={{ fill: "#FFFFFF" }}
           width="12"
           height="40"

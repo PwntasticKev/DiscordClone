@@ -4,10 +4,10 @@ export default () => {
   return (
     <svg
       name="Gamepad"
-      class="link-button-icon"
-      width="16"
-      height="16"
+      width="24"
+      height="24"
       viewBox="0 0 24 24"
+      style={{ opacity: "0.6" }}
     >
       <path
         fill="currentColor"

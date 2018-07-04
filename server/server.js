@@ -1,4 +1,5 @@
 require("dotenv").config()
+const cors = require("cors")
 const express = require("express")
 const session = require("express-session")
 const passport = require("passport")
@@ -8,6 +9,9 @@ const bodyParser = require("body-parser")
 const bcrypt = require("bcrypt")
 const LocalStrategy = require("passport-local")
 const uc = require("./uc")
+const ec = require("./ec")
+const pg = require("pg")
+const pgSession = require("connect-pg-simple")(session)
 
 const {
   SERVER_PORT,
@@ -19,23 +23,22 @@ const {
 const app = express()
 app.use(bodyParser.json())
 app.use("/static", express.static("public", { redirect: true }))
-
+app.use(cors())
 massive(CONNECTION_STRING).then(db => app.set("db", db))
-app.use(
-  session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-  })
-)
+
 // setting up session
 app.use(
   session({
+    store: new pgSession({
+      conString: CONNECTION_STRING, // Connection pool
+      tableName: "getSessions",
+      ttl: 30 * 24 * 60 * 60 * 1000
+    }),
     secret: SESSION_SECRET || "ghvjhvjahbsdfuhalksdfbkhagd",
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 30 * 24 * 60 * 60 * 1000
     }
   })
 )
@@ -66,14 +69,15 @@ passport.use(
       console.log("hits find_user")
 
       //else
-      console.log(req.body)
+
       if (!user[0] && req.body.email) {
         uc.createUser(req, username, password, done)
       } else if (!user[0]) {
         console.log("INSIDE OF THE NO EMAIL FAIL")
         return done(null, false)
       } else {
-        bcrypt.compare(password, user[0].password).then(valid => {
+        console.log(req.body, username, password, user[0])
+        bcrypt.compare(password, user[0].hashedpw).then(valid => {
           console.log("INSIDE OF THE COMPARE")
           if (valid) {
             return done(null, user[0])
@@ -124,31 +128,34 @@ passport.deserializeUser((user, done) => {
 //   next()
 // })
 
-app.post("/login", passport.authenticate("local"), (req, res, next) => {
-  if (req.user) {
-    console.log("Logging in")
-    res.redirect("/channels")
-  } else {
-    console.log("Password Incorrect")
-    return res.redirect("/")
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/shit"
+  }),
+  (req, res) => {
+    if (req.user) {
+      res.status(200).send("Log me in OMGGGGG")
+    }
   }
-})
+)
 // props.history.push('/dashboard') takes you to the route that you want. (on the front end)
 //options objects
 
-app.post(
-  "/signup",
-  passport.authenticate("local", {
-    successredirect: "/channels",
-    failureRedirect: "/login/fail?message=Incorrect login credentials. Please try again or signup if you do not have an account yet."
-  })
-)
+app.post("/signup", passport.authenticate("local"), (req, res) => {
+  if (req.user) {
+    res.status(200).send("2hund")
+  }
+})
+
 app.get("/logout", (req, res) => {
   req.logout()
   res.redirect("/")
 })
 
 //OTHER ENDPOINTS---------------------
+
+app.get("/user/info", ec.userInfo)
 
 app.listen(SERVER_PORT, () => {
   console.log(`AQUI EN LA ${SERVER_PORT}`)

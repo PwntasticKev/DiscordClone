@@ -55,11 +55,15 @@ const SideBarContainer = styled.section`
 const HomePageIcon = styled.div`
   width: 50px;
   height: 50px;
-  border-radius: 25%;
-  background: #7289da;
+  border-radius: 25px;
+  background-color: rgb(47, 49, 54);
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    background: rgb(114, 137, 218);
+    border-radius: 15px;
+  }
 `
 
 const Line = styled.div`
@@ -91,9 +95,11 @@ const CreateChannelButton = styled.button`
   background: #1e2124;
   color: #535559;
   position: relative;
-  transition: border-color 0.25s ease, color 0.25s ease;
   font-weight: 300;
   outline: 0;
+  transition: 
+  transition-duration: 2s;
+  transition-timing-function: ease-in-out;
   &:hover {
     border-color: hsla(0, 0%, 100%, 0.75);
     color: hsla(0, 0%, 100%, 0.75);
