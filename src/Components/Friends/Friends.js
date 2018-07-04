@@ -1,7 +1,10 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import GameCont from "./gameController"
-import FriendIcon from "./friendIcon"
+import GameCont from "../SVGs/gameController"
+import FriendIcon from "../SVGs/friendIcon"
+import Headphones from "../SVGs/headphones"
+import Cog from "../SVGs/cog"
+import Mic from "../SVGs/mic"
 
 export default class Friends extends Component {
   render() {
@@ -33,6 +36,17 @@ export default class Friends extends Component {
             <FriendName>friend</FriendName>
           </FriendContainer>
         </MessagesContainer>
+        <BottomContainer>
+          <div>MY icon</div>
+          <div>online?</div>
+          <div>
+            <div>Pwntastic</div>
+            <div>#8038</div>
+          </div>
+          <Mic />
+          <Headphones />
+          <Cog />
+        </BottomContainer>
       </Container>
     )
   }
@@ -127,3 +141,20 @@ const FriendContainer = styled.section`
   margin: 1px 0 1px 8px;
   padding: 0 8px;
 `
+
+// sound/speaker section
+const BottomContainer = styled.section`
+  display: flex;
+  position: absolute;
+  bottom: 0;
+`
+
+// const MicIcon = styled.button`
+//   background: url(`${Mic}`);
+// `
+// const HeadphoneIcon = styled.button`
+//   background: url(`${Headphones}`);
+// `
+// const CogIcon = styled.button`
+//   background: url(`${Cog}`);
+// `

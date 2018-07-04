@@ -4,7 +4,6 @@ export default () => {
   return (
     <svg
       name="PersonWaving"
-      class="link-button-icon"
       width="24"
       height="24"
       viewBox="0 0 24 24"

@@ -19,10 +19,8 @@ export default class LogInPage extends Component {
   }
   SignUp() {
     axios.post("/signup", { ...this.state }).then(res => {
-      if (res.data.redirect === "/") {
-        window.location = "/"
-      } else if (res.data.redirect === "/login") {
-        window.location = "/channels"
+      if (res.status === 200) {
+        return this.props.history.push("/channels")
       }
     })
   }
@@ -32,7 +30,11 @@ export default class LogInPage extends Component {
     axios
       .post("/login", { ...this.state })
       .then(res => {
-        console.log(res)
+        if (res.status === 200) {
+          return this.props.history.push("/channels")
+        } else {
+          return this.props.history.push("/")
+        }
       })
       .catch(console.log)
   }

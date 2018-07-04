@@ -3,13 +3,7 @@ import styled from "styled-components"
 
 export default () => {
   return (
-    <SVGs
-      name="Discord"
-      class="home-icon"
-      width="40"
-      height="50"
-      viewBox="0 0 24 24"
-    >
+    <SVGs name="Discord" width="40" height="50" viewBox="0 0 24 24">
       <defs>
         <path
           id="discord-a"

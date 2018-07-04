@@ -55,11 +55,15 @@ const SideBarContainer = styled.section`
 const HomePageIcon = styled.div`
   width: 50px;
   height: 50px;
-  border-radius: 25%;
-  background: #7289da;
+  border-radius: 25px;
+  background-color: rgb(47, 49, 54);
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    background: rgb(114, 137, 218);
+    border-radius: 15px;
+  }
 `
 
 const Line = styled.div`
