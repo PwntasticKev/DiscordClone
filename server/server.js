@@ -8,6 +8,7 @@ const bodyParser = require("body-parser")
 const bcrypt = require("bcrypt")
 const LocalStrategy = require("passport-local")
 const uc = require("./uc")
+const ec = require("./ec")
 
 const {
   SERVER_PORT,
@@ -151,6 +152,8 @@ app.get("/logout", (req, res) => {
 })
 
 //OTHER ENDPOINTS---------------------
+
+app.get("/user/info", ec.userInfo)
 
 app.listen(SERVER_PORT, () => {
   console.log(`AQUI EN LA ${SERVER_PORT}`)

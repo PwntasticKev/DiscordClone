@@ -42,9 +42,6 @@ export default class LogInPage extends Component {
   //login / signup
 
   render() {
-    console.log(this.state.username, this.state.password, this.state.email)
-    console.log("state", this.state)
-
     return (
       <Container>
         <Title>DISCORD CLONE</Title>

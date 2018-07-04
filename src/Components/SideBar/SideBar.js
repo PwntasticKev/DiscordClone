@@ -95,9 +95,11 @@ const CreateChannelButton = styled.button`
   background: #1e2124;
   color: #535559;
   position: relative;
-  transition: border-color 0.25s ease, color 0.25s ease;
   font-weight: 300;
   outline: 0;
+  transition: 
+  transition-duration: 2s;
+  transition-timing-function: ease-in-out;
   &:hover {
     border-color: hsla(0, 0%, 100%, 0.75);
     color: hsla(0, 0%, 100%, 0.75);
