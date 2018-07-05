@@ -25,14 +25,16 @@ export default class Friends extends Component {
         </GamesyFriends>
         <DirectMes>Direct Messages</DirectMes>
         <MessagesContainer>
-          <FriendContainer>
-            <UserIcon>ICON</UserIcon>
-            <FriendName>friend</FriendName>
-          </FriendContainer>
-          <FriendContainer>
-            <UserIcon>ICONs</UserIcon>
-            <FriendName>friend</FriendName>
-          </FriendContainer>
+          <OnlineContainer>
+            <MyIcon />
+            <Online />
+            <FriendOnline>TabNana</FriendOnline>
+          </OnlineContainer>
+          <OnlineContainer>
+            <MyIcon />
+            <Online />
+            <FriendOnline>Skallywag</FriendOnline>
+          </OnlineContainer>
         </MessagesContainer>
 
         <UserPanel />
@@ -116,17 +118,41 @@ const GamesyFriends = styled.section`
   padding-top: 20px;
 `
 
-const UserIcon = styled.div`
+const MyIcon = styled.div`
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
-  height: 32px;
-  width: 32px;
+  margin-right: 10px;
+
+  background: red;
 `
-const FriendName = styled.div`
-  opacity: 0.3;
-  margin-left: 18px;
+const Online = styled.div`
+  border-radius: 7px;
+  bottom: 3px;
+  height: 10px;
+  left: 28px;
+  position: absolute;
+  width: 10px;
+  background: #43b581;
+  border: 2px solid #2f3136;
 `
-const FriendContainer = styled.section`
+const OnlineContainer = styled.section`
   display: flex;
+  position: relative;
+  height: 26px;
   margin: 1px 0 1px 8px;
-  padding: 0 8px;
+  padding: 8px;
+  font-weight: 400;
+  align-items: center;
+  border-radius: 3px;
+`
+const FriendOnline = styled.div`
+  font-size: 15px;
+  opacity: 0.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 20px;
+  font-weight: 500;
+  color: #f6f6f7;
+  margin-left: 12px;
 `
