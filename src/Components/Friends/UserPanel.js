@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import Headphones from "../SVGs/headphones"
+import Headphones from "../SVGs/Headphones/headphones"
 import Cog from "../SVGs/cog"
-import Mic from "../SVGs/mic"
+import Mic from "../SVGs/Mic/mic"
 import axios from "axios"
 export default class UserPanel extends Component {
   constructor(props) {
