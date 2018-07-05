@@ -7,7 +7,7 @@ export default class componentName extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      clicked: false
+      clicked: true
     }
   }
 
@@ -18,7 +18,7 @@ export default class componentName extends Component {
   }
   render() {
     return (
-      <StyButton>
+      <StyButton onClick={_ => this.clicked(this.state.clicked)}>
         <div>{this.state.clicked === true ? <UnMuteHeadphones /> : <MuteHeadphones />}</div>
       </StyButton>
     )
@@ -40,4 +40,8 @@ const StyButton = styled.button`
   position: relative;
   width: 32px;
   outline: 0;
+  &:hover {
+    background-color: rgba(24, 25, 28, 0.3);
+    opacity: 1;
+  }
 `
