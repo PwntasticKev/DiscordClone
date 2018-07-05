@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import Headphones from "../SVGs/headphones"
+import Headphones from "../SVGs/Headphones/headphones"
 import Cog from "../SVGs/cog"
-import Mic from "../SVGs/mic"
+import Mic from "../SVGs/Mic/mic"
 import axios from "axios"
 export default class UserPanel extends Component {
   constructor(props) {
@@ -31,9 +31,11 @@ export default class UserPanel extends Component {
           <div>{this.state.username}</div>
           <Hash>#8038</Hash>
         </div>
-        <Mic />
-        <Headphones />
-        <Cog />
+        <IconContainer>
+          <Mic />
+          <Headphones />
+          <Cog />
+        </IconContainer>
       </BottomContainer>
     )
   }
@@ -76,4 +78,10 @@ const OnlineContainer = styled.section`
 const Hash = styled.div`
   font-size: 10px;
   opacity: 0.3;
+`
+const IconContainer = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 1.3rem;
 `

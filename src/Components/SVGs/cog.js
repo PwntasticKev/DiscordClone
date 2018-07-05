@@ -30,4 +30,9 @@ const StyButton = styled.button`
   position: relative;
   width: 32px;
   outline: 0;
+  color: #f6f6f7;
+  &:hover {
+    background-color: rgba(24, 25, 28, 0.3);
+    opacity: 1;
+  }
 `

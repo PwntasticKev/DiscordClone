@@ -17,18 +17,7 @@ module.exports = {
       })
     })
   },
-
-  login: (req, res, next) => {
-    const { password, username } = req.body
-    db.query("SELECT ALL FROM users WHERE username = ?", [username], data => {
-      console.log("DB User Data from Login: ", data[0])
-      bcrypt.compare(password, data[0].password, valid => {
-        if (valid) {
-          res.render("dashboard", { user: req.session.user, userInfo: data })
-        } else {
-          req.flash("Incorrect Password")
-        }
-      })
-    })
+  createChannel: (req, res, next) => {
+    const db = req.app.get("db")
   }
 }
