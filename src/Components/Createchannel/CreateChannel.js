@@ -77,10 +77,13 @@ class CreateChannel extends Component {
                   </FlagContainer>
                   <ChangeButton>change</ChangeButton>
                 </FlagButtonContainer>
+                <div>By creating</div>
               </div>
             </LeftBoxContainer>
             <AvatarCircle>
-              <input type="file" accept=".jpg,.jpeg,.png,.gif" />
+              <HoverReveal>Change Icon</HoverReveal>
+              <Upload type="file" accept=".jpg,.jpeg,.png,.gif" />
+              <Small>Minimum Size: 128x128</Small>
             </AvatarCircle>
           </BoxContainerCreate>
           <FooterCreate>
@@ -350,6 +353,7 @@ const ChangeButton = styled.button`
 `
 const BoxContainerCreate = styled.section`
   display: flex;
+  margin-top: 14px;
 `
 const LeftBoxContainer = styled.section`
   display: flex;
@@ -359,6 +363,19 @@ const LeftBoxContainer = styled.section`
 
 // right box
 
+const HoverReveal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 12px;
+  text-transform: uppercase;
+  visibility: hidden;
+  padding: 0 2rem;
+`
 const AvatarCircle = styled.div`
   background-color: #7289da;
   background-position: 50%;
@@ -369,6 +386,31 @@ const AvatarCircle = styled.div`
   box-sizing: border-box;
   display: inline-block;
   height: 138px;
+  left: 3rem;
   margin-bottom: 10px;
   position: relative;
+  transition: -webkit-box-shadow 0.1s;
+  transition: box-shadow 0.1s;
+  width: 138px;
+  &:hover {
+    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.75);
+  }
+
+  &:hover ${HoverReveal} {
+    visibility: visible;
+  }
+`
+const Upload = styled.input`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+`
+const Small = styled.p`
+  color: #87909c;
+  display: block;
+  font-size: 10px;
 `
