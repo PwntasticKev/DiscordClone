@@ -1,17 +1,32 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import DiscordIcon from "./DiscordIcon"
+import DiscordIcon from "./SVG/DiscordIcon"
 import { connect } from "react-redux"
 // import CreateChannel from "../Createchannel/CreateChannel"
 // import { Link } from "react-router-dom"
 import { toggleChannelMenu } from "../../ducks/reducer"
 
 class SideBar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      home: true
+    }
+  }
+
+  home(bool) {
+    this.setState({
+      home: !bool
+    })
+  }
   render() {
     return (
-      <div style={{ display: "inlineBlock" }}>
+      <div>
         <SideBarContainer>
-          <HomePageIcon>
+          <HomePageIcon
+            onClick={_ => this.home(this.state.home)}
+            style={this.state.home === true ? IconstyleClicked : null}
+          >
             <DiscordIcon />
           </HomePageIcon>
           <Online>1 Online</Online>
@@ -65,6 +80,11 @@ const HomePageIcon = styled.div`
     border-radius: 15px;
   }
 `
+
+let IconstyleClicked = {
+  background: "rgb(114, 137, 218)",
+  borderRadius: "15px"
+}
 
 const Line = styled.div`
   width: 30px;
