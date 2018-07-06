@@ -31,6 +31,7 @@ class SideBar extends Component {
           </HomePageIcon>
           <Online>1 Online</Online>
           <Line />
+          <ChannelIcon>T</ChannelIcon>
           <CreateChannelButton
             onClick={_ =>
               this.props.toggleChannelMenu(this.props.channelMenuOpen)
@@ -117,13 +118,27 @@ const CreateChannelButton = styled.button`
   position: relative;
   font-weight: 300;
   outline: 0;
-  transition: 
-  transition-duration: 2s;
+  margin-top: 8px;
+  transition-duration: 0.5s;
   transition-timing-function: ease-in-out;
   &:hover {
     border-color: hsla(0, 0%, 100%, 0.75);
     color: hsla(0, 0%, 100%, 0.75);
   }
+`
+
+const ChannelIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(47, 49, 54);
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 8px;
+  color: #fff;
 `
 
 const Plus = styled.div`

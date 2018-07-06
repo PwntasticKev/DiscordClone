@@ -6,6 +6,7 @@ import bluePeopleIcon from "./img/bluepeopleicon.png"
 import greenPeopleIcon from "./img/greeniconpeople.png"
 import CircleThing from "./img/Circle.svg"
 import FlagIcon from "./img/flagIcon.png"
+import Arrow1 from "./img/arrow1"
 
 class CreateChannel extends Component {
   constructor(props) {
@@ -55,46 +56,58 @@ class CreateChannel extends Component {
             </RightBox>
           </BoxContainer>
         </Test>
-        <CreateChannelContainer
+        {/* this begins the other box on top */}
+        <ContainChannel
           display={this.state.createChannelPanel === true ? "block" : "none"}
         >
-          <div>
-            <H1>CREATE YOUR SERVER</H1>
-            <SubTit>By creating a server, you will have access to </SubTit>
-          </div>
-          <BoxContainerCreate>
-            <LeftBoxContainer>
-              <div>
-                <H5>SERVER NAME</H5>
-                <input type="text" placehodler="Enter server name" />
-              </div>
-              <div>
-                <H5>SERVER REGION</H5>
-                <FlagButtonContainer>
-                  <FlagContainer>
-                    <Flag src={FlagIcon} alt="" />
-                    <US>US West</US>
-                  </FlagContainer>
-                  <ChangeButton>change</ChangeButton>
-                </FlagButtonContainer>
-                <div>By creating</div>
-              </div>
-            </LeftBoxContainer>
-            <AvatarCircle>
-              <HoverReveal>Change Icon</HoverReveal>
-              <Upload type="file" accept=".jpg,.jpeg,.png,.gif" />
-              <Small>Minimum Size: 128x128</Small>
-            </AvatarCircle>
-          </BoxContainerCreate>
+          <UpperChannelCreate>
+            <div>
+              <H1>CREATE YOUR SERVER</H1>
+              <SubTit>
+                By creating a server, you will have access to voice and text
+                chat to use amongst your friends.
+              </SubTit>
+            </div>
+            <BoxContainerCreate>
+              <LeftBoxContainer>
+                <div>
+                  <H5>SERVER NAME</H5>
+                  <EnterServerName
+                    type="text"
+                    placehodler="Enter server name"
+                  />
+                </div>
+                <div>
+                  <H5>SERVER REGION</H5>
+                  <FlagButtonContainer>
+                    <FlagContainer>
+                      <Flag src={FlagIcon} alt="" />
+                      <US>US West</US>
+                    </FlagContainer>
+                    <ChangeButton>change</ChangeButton>
+                  </FlagButtonContainer>
+                  <Glines style={{ margin: "15px 0" }}>
+                    By creating a server, you agree to Discord's Community
+                    Guidelines
+                  </Glines>
+                </div>
+              </LeftBoxContainer>
+              <AvatarCircle>
+                <HoverReveal>Change Icon</HoverReveal>
+                <Upload type="file" accept=".jpg,.jpeg,.png,.gif" />
+                <Small>Minimum Size: 128x128</Small>
+              </AvatarCircle>
+            </BoxContainerCreate>
+          </UpperChannelCreate>
           <FooterCreate>
-            <button
+            <BackButton
               onClick={_ => this.createMenuOpen(this.state.createChannelPanel)}
             >
-              Back
-            </button>
-            <button>Create</button>
+              <Arrow1 />{" "}
+            </BackButton>
+            <CreateButton>Create</CreateButton>
           </FooterCreate>
-        </CreateChannelContainer>
+        </ContainChannel>
         <Container
           onClick={_ =>
             this.props.toggleChannelMenu(this.props.channelMenuOpen)
@@ -147,10 +160,14 @@ const Test = styled.div`
   transform: translateZ(0px);
 `
 
-const CreateChannelContainer = styled.section`
+const UpperChannelCreate = styled.section`
+  padding: 28px 40px 0 48px;
+`
+
+const ContainChannel = styled.section`
   display: ${props => props.display};
-  width: 490px;
-  height: 23rem;
+  width: 538px;
+  height: 26.75rem;
   background: white;
   z-index: 200;
   position: absolute;
@@ -158,7 +175,6 @@ const CreateChannelContainer = styled.section`
   margin-left: 32%;
   text-align: center;
   border-radius: 5px;
-  padding: 28px 40px 0 48px;
 `
 let test1 = {
   display: "none"
@@ -277,21 +293,13 @@ const Ore = styled.div`
 
 // Create Your Server Styles
 
-const FooterCreate = styled.section`
-  background-color: #f9f9f9;
-  border-radius: 0 0 5px 5px;
-  border-top: 1px solid #f0f0f0;
-  box-sizing: border-box;
-  padding: 18px 40px;
-  width: 100%;
-`
-
 const H1 = styled.h1`
   color: #7289da;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.3;
   text-align: center;
+  margin: 0;
 `
 const SubTit = styled.h5`
   color: #99aab5;
@@ -386,7 +394,7 @@ const AvatarCircle = styled.div`
   box-sizing: border-box;
   display: inline-block;
   height: 138px;
-  left: 3rem;
+  right: 2rem;
   margin-bottom: 10px;
   position: relative;
   transition: -webkit-box-shadow 0.1s;
@@ -413,4 +421,80 @@ const Small = styled.p`
   color: #87909c;
   display: block;
   font-size: 10px;
+`
+
+const Glines = styled.p`
+  color: #87909c;
+  font-size: 11px;
+  margin: 0;
+`
+
+//footer options
+
+const FooterCreate = styled.section`
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  padding: 18px 40px;
+  text-align: right;
+  width: 100%;
+  border-top: 1px solid #f0f0f0;
+`
+
+const CreateButton = styled.button`
+  margin-left: 20px;
+  background-color: #7289da;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 10px 20px;
+  position: relative;
+  transition: background-color 0.2s ease;
+`
+
+const BackButton = styled.button`
+  background-color: #f9f9f9;
+  outline: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #f9f9f9;
+  color: #949494;
+  padding: 10px 0 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 10px 20px;
+  position: relative;
+  transition: background-color 0.2s ease;
+  &:after {
+    content: "Back";
+  }
+  &:hover {
+    border-bottom: 2px solid #949494;
+  }
+`
+
+const EnterServerName = styled.input`
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  color: #2f3136;
+  outline: 0;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 1px;
+  resize: none;
+  width: 80%;
+  &:focus {
+    border-bottom: 2px solid #7289da;
+    margin-bottom: 0;
+  }
 `
