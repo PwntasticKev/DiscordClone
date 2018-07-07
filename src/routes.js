@@ -6,6 +6,7 @@ import Homepage from "./Components/HomePage/HomePage"
 export default (
   <Switch>
     <Route exact path="/" component={LogInPage} />
-    <Route exact path="/channels" component={Homepage} />
+    <Route path="/channels" component={Homepage} />
+    <Route path="/channels/t" component={Homepage} />
   </Switch>
 )

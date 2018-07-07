@@ -3,7 +3,7 @@ import styled from "styled-components"
 import DiscordIcon from "./SVG/DiscordIcon"
 import { connect } from "react-redux"
 // import CreateChannel from "../Createchannel/CreateChannel"
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { toggleChannelMenu } from "../../ducks/reducer"
 
 class SideBar extends Component {
@@ -23,15 +23,19 @@ class SideBar extends Component {
     return (
       <div>
         <SideBarContainer>
-          <HomePageIcon
-            onClick={_ => this.home(this.state.home)}
-            style={this.state.home === true ? IconstyleClicked : null}
-          >
-            <DiscordIcon />
-          </HomePageIcon>
+          <Link to="/channels">
+            <HomePageIcon
+              onClick={_ => this.home(this.state.home)}
+              style={this.state.home === true ? IconstyleClicked : null}
+            >
+              <DiscordIcon />
+            </HomePageIcon>
+          </Link>
           <Online>1 Online</Online>
           <Line />
-          <ChannelIcon>T</ChannelIcon>
+          <Link to="/t">
+            <ChannelIcon>T</ChannelIcon>
+          </Link>
           <CreateChannelButton
             onClick={_ =>
               this.props.toggleChannelMenu(this.props.channelMenuOpen)
