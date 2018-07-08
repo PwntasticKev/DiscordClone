@@ -27,12 +27,13 @@ function uploadPhoto(req, res) {
   console.log(buf)
 
   S3.upload(params, (err, data) => {
-    const { servername } = req.body
+    const { servername, photo } = req.body
     console.log("server one", servername)
     console.log(err, data)
     if (err) {
       res.status(500).send(err)
     } else {
+      console.log("hitting upload endpoint")
       const db = req.app.get("db")
       //db stuff
     }

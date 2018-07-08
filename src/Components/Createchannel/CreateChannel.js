@@ -10,7 +10,6 @@ import FlagIcon from "./img/flagIcon.png"
 import Arrow1 from "./img/arrow1"
 
 function sendToback(photo) {
-  console.log(photo)
   return axios.post("/api/photoUpload", photo)
 }
 
@@ -166,7 +165,7 @@ class CreateChannel extends Component {
                     : "transparent"
                 }
               >
-                <HoverReveal>Change Icon</HoverReveal>
+                <HoverReveal>Change Icontestimngggg</HoverReveal>
                 <FirstLetter>{this.state.firstChar}</FirstLetter>
                 <div className="FileUpload">
                   <label class="custom-file-upload">
