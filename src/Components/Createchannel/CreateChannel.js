@@ -10,7 +10,7 @@ import FlagIcon from "./img/flagIcon.png"
 import Arrow1 from "./img/arrow1"
 
 function sendToback(photo) {
-  return axios.post("/api/photoUpload", photo)
+  return axios.post("/api/uploadPhoto", photo)
 }
 
 class CreateChannel extends Component {
@@ -28,13 +28,6 @@ class CreateChannel extends Component {
     this.handlePhoto = this.handlePhoto.bind(this)
     this.sendPhoto = this.sendPhoto.bind(this)
   }
-
-  firstChar() {
-    let first = this.state.serverName.split("")
-    this.setState({
-      firstChar: first[0]
-    })
-  }
   //S3 Top
   handlePhoto(event) {
     const reader = new FileReader()
@@ -51,15 +44,21 @@ class CreateChannel extends Component {
   }
 
   sendPhoto(event) {
-    let { file, filename, filetype } = this.state
-    // event.preventDefault()
+    event.preventDefault()
 
-    sendToback(file, filename, filetype).then(response => {
+    sendToback(this.state).then(response => {
       console.log(response.data)
     })
     this.props.toggleChannelMenu(this.props.channelMenuOpen)
   }
   // S3 bottom
+
+  firstChar() {
+    let first = this.state.serverName.split("")
+    this.setState({
+      firstChar: first[0]
+    })
+  }
 
   createMenuOpen(bool) {
     this.setState({
@@ -165,16 +164,10 @@ class CreateChannel extends Component {
                     : "transparent"
                 }
               >
-                <HoverReveal>Change Icontestimngggg</HoverReveal>
+                <HoverReveal>Change Icon</HoverReveal>
                 <FirstLetter>{this.state.firstChar}</FirstLetter>
                 <div className="FileUpload">
-                  <label class="custom-file-upload">
-                    <Upload
-                      type="file"
-                      onChange={this.handlePhoto}
-                      className="FileUpload1"
-                    />
-                  </label>
+                  <Upload type="file" onChange={this.handlePhoto} />
                   {this.state.file && (
                     <ImageUpload
                       src={this.state.file}
@@ -196,7 +189,7 @@ class CreateChannel extends Component {
             <CreateButton
               onClick={e => {
                 this.sendPhoto(e)
-                this.createServer()
+                // this.createServer()
               }}
             >
               Create

@@ -7,6 +7,6 @@ export default (
   <Switch>
     <Route exact path="/" component={LogInPage} />
     <Route path="/channels" component={Homepage} />
-    <Route path="/channels/t" component={Homepage} />
+    {/* <Route path="/channels/:channelid" component={Channel} /> */}
   </Switch>
 )

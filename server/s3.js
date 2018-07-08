@@ -1,5 +1,7 @@
+require("dotenv").config()
 const AWS = require("aws-sdk")
 
+// The keys will be obtained from you AWS account.
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESSKEY,
   secretAccessKey: process.env.AWS_SECRETKEY,
@@ -9,8 +11,7 @@ AWS.config.update({
 const S3 = new AWS.S3()
 
 function uploadPhoto(req, res) {
-  console.log("this", req)
-
+  console.log("photo in back", req.body.filename, process.env.AWS_ACCESSKEY)
   let photo = req.body,
     buf = new Buffer(
       photo.file.replace(/^data:image\/\w+;base64,/, ""),
@@ -27,19 +28,17 @@ function uploadPhoto(req, res) {
   console.log(buf)
 
   S3.upload(params, (err, data) => {
-    const { servername, photo } = req.body
-    console.log("server one", servername)
     console.log(err, data)
     if (err) {
       res.status(500).send(err)
     } else {
-      console.log("hitting upload endpoint")
       const db = req.app.get("db")
-      //db stuff
+      // db.create_channel([id, name, channelid, req.user.id, img])
+      res.status(200).send(data)
     }
   })
 }
 
-module.exports = {
-  uploadPhoto: uploadPhoto
+module.exports = function(app) {
+  app.post("/api/uploadPhoto", uploadPhoto)
 }

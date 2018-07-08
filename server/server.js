@@ -156,7 +156,7 @@ app.get("/logout", (req, res) => {
 
 app.get("/user/info", ec.userInfo)
 //~S3
-app.post("/api/uploadPhoto", S3.uploadPhoto)
+S3(app)
 //~S3
 app.listen(SERVER_PORT, () => {
   console.log(`AQUI EN LA ${SERVER_PORT}`)
