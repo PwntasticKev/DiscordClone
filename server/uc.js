@@ -16,8 +16,5 @@ module.exports = {
         })
       })
     })
-  },
-  createChannel: (req, res, next) => {
-    const db = req.app.get("db")
   }
 }

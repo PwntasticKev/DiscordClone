@@ -12,6 +12,7 @@ const uc = require("./uc")
 const ec = require("./ec")
 const pg = require("pg")
 const pgSession = require("connect-pg-simple")(session)
+const S3 = require("./s3")
 
 const {
   SERVER_PORT,
@@ -21,7 +22,7 @@ const {
 } = process.env
 
 const app = express()
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: "30mb" }))
 app.use("/static", express.static("public", { redirect: true }))
 app.use(cors())
 massive(CONNECTION_STRING).then(db => app.set("db", db))
@@ -131,7 +132,7 @@ passport.deserializeUser((user, done) => {
 app.post(
   "/login",
   passport.authenticate("local", {
-    failureRedirect: "/shit"
+    failureRedirect: "/shiz"
   }),
   (req, res) => {
     if (req.user) {
@@ -139,8 +140,6 @@ app.post(
     }
   }
 )
-// props.history.push('/dashboard') takes you to the route that you want. (on the front end)
-//options objects
 
 app.post("/signup", passport.authenticate("local"), (req, res) => {
   if (req.user) {
@@ -156,7 +155,9 @@ app.get("/logout", (req, res) => {
 //OTHER ENDPOINTS---------------------
 
 app.get("/user/info", ec.userInfo)
-
+//~S3
+app.post("/api/uploadPhoto", S3.uploadPhoto)
+//~S3
 app.listen(SERVER_PORT, () => {
   console.log(`AQUI EN LA ${SERVER_PORT}`)
 })

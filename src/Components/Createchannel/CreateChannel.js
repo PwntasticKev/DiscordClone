@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import axios from "axios"
 import styled from "styled-components"
 import { toggleChannelMenu } from "../../ducks/reducer"
 import { connect } from "react-redux"
@@ -8,13 +9,58 @@ import CircleThing from "./img/Circle.svg"
 import FlagIcon from "./img/flagIcon.png"
 import Arrow1 from "./img/arrow1"
 
+function sendToback(photo) {
+  console.log(photo)
+  return axios.post("/api/photoUpload", photo)
+}
+
 class CreateChannel extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      createChannelPanel: false
+      createChannelPanel: false,
+      serverName: "",
+      file: "",
+      filename: "",
+      filetype: "",
+      avatarCircle: `#7289da`,
+      firstChar: ""
     }
+    this.handlePhoto = this.handlePhoto.bind(this)
+    this.sendPhoto = this.sendPhoto.bind(this)
   }
+
+  firstChar() {
+    let first = this.state.serverName.split("")
+    this.setState({
+      firstChar: first[0]
+    })
+  }
+  //S3 Top
+  handlePhoto(event) {
+    const reader = new FileReader()
+    const file = event.target.files[0]
+
+    reader.onload = photo => {
+      this.setState({
+        file: photo.target.result,
+        filename: file.name,
+        filetype: file.type
+      })
+    }
+    reader.readAsDataURL(file)
+  }
+
+  sendPhoto(event) {
+    let { file, filename, filetype } = this.state
+    // event.preventDefault()
+
+    sendToback(file, filename, filetype).then(response => {
+      console.log(response.data)
+    })
+    this.props.toggleChannelMenu(this.props.channelMenuOpen)
+  }
+  // S3 bottom
 
   createMenuOpen(bool) {
     this.setState({
@@ -22,7 +68,25 @@ class CreateChannel extends Component {
     })
   }
 
+  serverNameTrack(e) {
+    this.setState({
+      serverName: e.target.value
+    })
+    console.log(this.state.serverName)
+  }
+
+  createServer() {
+    axios
+      .post("/createServer", { serverName: this.state.serverName })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.toggleChannelMenu(this.props.channelMenuOpen)
+        }
+      })
+  }
+
   render() {
+    console.log(this.state.file)
     return (
       <div style={this.props.channelMenuOpen === true ? test : test1}>
         <Test
@@ -74,6 +138,10 @@ class CreateChannel extends Component {
                   <EnterServerName
                     type="text"
                     placehodler="Enter server name"
+                    onChange={e => {
+                      this.serverNameTrack(e)
+                      this.firstChar(e)
+                    }}
                   />
                 </div>
                 <div>
@@ -91,10 +159,32 @@ class CreateChannel extends Component {
                   </Glines>
                 </div>
               </LeftBoxContainer>
-              <AvatarCircle>
+              <AvatarCircle
+                background={
+                  this.state.file === ""
+                    ? this.state.avatarCircle
+                    : "transparent"
+                }
+              >
                 <HoverReveal>Change Icon</HoverReveal>
-                <Upload type="file" accept=".jpg,.jpeg,.png,.gif" />
-                <Small>Minimum Size: 128x128</Small>
+                <FirstLetter>{this.state.firstChar}</FirstLetter>
+                <div className="FileUpload">
+                  <label class="custom-file-upload">
+                    <Upload
+                      type="file"
+                      onChange={this.handlePhoto}
+                      className="FileUpload1"
+                    />
+                  </label>
+                  {this.state.file && (
+                    <ImageUpload
+                      src={this.state.file}
+                      alt=""
+                      className="file-preview"
+                    />
+                  )}
+                  <Small>Minimum Size: 128x128</Small>
+                </div>
               </AvatarCircle>
             </BoxContainerCreate>
           </UpperChannelCreate>
@@ -102,9 +192,16 @@ class CreateChannel extends Component {
             <BackButton
               onClick={_ => this.createMenuOpen(this.state.createChannelPanel)}
             >
-              <Arrow1 />{" "}
+              <Arrow1 />
             </BackButton>
-            <CreateButton>Create</CreateButton>
+            <CreateButton
+              onClick={e => {
+                this.sendPhoto(e)
+                this.createServer()
+              }}
+            >
+              Create
+            </CreateButton>
           </FooterCreate>
         </ContainChannel>
         <Container
@@ -160,7 +257,7 @@ const Test = styled.div`
 `
 
 const UpperChannelCreate = styled.section`
-  padding: 28px 40px 0 48px;
+  padding: 30px 40px 0 48px;
 `
 
 const ContainChannel = styled.section`
@@ -372,6 +469,7 @@ const LeftBoxContainer = styled.section`
 
 const HoverReveal = styled.div`
   display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -382,9 +480,17 @@ const HoverReveal = styled.div`
   text-transform: uppercase;
   visibility: hidden;
   padding: 0 2rem;
+  color: white;
+`
+
+const FirstLetter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `
 const AvatarCircle = styled.div`
-  background-color: #7289da;
+  background: ${props => props.background};
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 128px 128px;
@@ -396,9 +502,11 @@ const AvatarCircle = styled.div`
   right: 2rem;
   margin-bottom: 10px;
   position: relative;
+  top: 14px;
   transition: -webkit-box-shadow 0.1s;
   transition: box-shadow 0.1s;
   width: 138px;
+  z-index: 41;
   &:hover {
     box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.75);
   }
@@ -415,6 +523,7 @@ const Upload = styled.input`
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 40;
 `
 const Small = styled.p`
   color: #87909c;
@@ -426,6 +535,7 @@ const Glines = styled.p`
   color: #87909c;
   font-size: 11px;
   margin: 0;
+  width: 85%;
 `
 
 //footer options
@@ -496,4 +606,12 @@ const EnterServerName = styled.input`
     border-bottom: 2px solid #7289da;
     margin-bottom: 0;
   }
+`
+const ImageUpload = styled.img`
+  position: absolute;
+  top: 0;
+  height: 128px;
+  width: 128px;
+  left: 0;
+  border-radius: 50%;
 `
